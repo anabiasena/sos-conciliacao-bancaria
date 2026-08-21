@@ -40,6 +40,26 @@ Detalhes completos de nodes e branches: [`docs/arquitetura-workflow.md`](docs/ar
 
 O fluxo manual original está documentado (por completo) em [`docs/fluxo-original-planilha.md`](docs/fluxo-original-planilha.md) — vale a pena ver de onde saímos. 😄
 
+## 📸 Capturas de tela
+
+> Todos os dados exibidos abaixo são fictícios/sanitizados — nenhum valor, saldo ou nome de banco real é divulgado.
+
+| Painel de Conciliação | Pendências de Conciliação |
+|---|---|
+| ![Conciliação](docs/screenshots/conciliacao.jpg) | ![Pendências de Conciliação](docs/screenshots/pendencias-conciliacao.jpg) |
+
+| Categorização | Transferências entre Contas |
+|---|---|
+| ![Categorização](docs/screenshots/categorizacao.jpg) | ![Transferências entre Contas](docs/screenshots/transferencias.jpg) |
+
+| Dashboard — Visão Geral | Ranking e Evolução Comparativa |
+|---|---|
+| ![Dashboard Visão Geral](docs/screenshots/dashboard-visao-geral.jpg) | ![Ranking e Evolução](docs/screenshots/ranking-evolucao-comparativo.jpg) |
+
+| Análise Horizontal de Gastos | Resumo por Categoria (Vertical) |
+|---|---|
+| ![Análise Horizontal](docs/screenshots/analise-horizontal.jpg) | ![Resumo por Categoria](docs/screenshots/resumo-categoria-vertical.jpg) |
+
 ## 🛠️ Tecnologias utilizadas
 
 - **n8n** — automação de workflows (webhooks, formulários, integrações via API)
@@ -57,7 +77,8 @@ O fluxo manual original está documentado (por completo) em [`docs/fluxo-origina
 │   └── montar-html-painel.js    # Código do node "Montar HTML do Painel" (Code node no n8n)
 └── docs/
     ├── arquitetura-workflow.md   # Detalhamento dos nodes/branches do workflow n8n
-    └── fluxo-original-planilha.md
+    ├── fluxo-original-planilha.md
+    └── screenshots/              # Capturas de tela do painel (dados sanitizados)
 ```
 
 ---
