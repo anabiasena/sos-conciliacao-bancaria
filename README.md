@@ -1,37 +1,54 @@
-# Painel de Conciliação Bancária (n8n + Notion)
+# 💜 Painel de Conciliação Bancária — Solutions on Sales
 
-## Visão geral
+> Um projeto nascido de amor, dados e uma planilha que já tinha cumprido sua missão.
 
-Sistema de conciliação bancária e categorização de movimentações financeiras, inspirado no Conta Azul, construído com **n8n** (automação/backend) e **Notion** (banco de dados). Permite importar extratos bancários (OFX), categorizar movimentações, conciliar períodos e visualizar dashboards financeiros (entradas, saídas, análise horizontal/vertical de gastos, transferências entre contas).
+## 💡 A história por trás do projeto
 
-> ⚠️ **Privacidade**: este repositório não contém nenhum dado financeiro real, valores, extratos ou nomes de bancos/contas reais. Nomes de contas foram substituídos por placeholders genéricos (ex.: "Conta Banco A"). URLs de infraestrutura (domínio/IP, formulário) foram substituídas por placeholders. Configure as suas antes de usar.
+Tudo começou com uma vontade simples: **ajudar**. Meu namorado é dono da **Solutions on Sales**, e como todo empreendedor, ele vivia às voltas com extratos bancários, categorização de movimentações e aquela eterna pergunta no fim do mês: *"os valores batem com o extrato?"*.
 
-## Arquitetura
+O processo era 100% manual, feito numa planilha do Google Sheets: baixar os OFXs dos bancos, importar, categorizar linha por linha e conferir tudo à mão. Funcionava, mas consumia tempo — tempo que ele poderia estar usando para fazer o negócio crescer.
 
-- **n8n**: orquestra o fluxo (formulário de importação, parsing do OFX, gravação no Notion, webhook do painel HTML).
-- **Notion**: armazena os dados em 4 bases:
-  - `Movimentações Bancárias` — cada lançamento importado (data, valor, categoria, conta, status de conciliação).
-  - `Conciliação Bancária` — um registro por período conciliado (mês/conta), com totais e status.
-  - `Contas a Pagar` — títulos a pagar vinculados a movimentações.
-  - `Contas a Receber` — títulos a receber vinculados a movimentações.
-- **Painel Web**: uma página HTML/JS servida por um Webhook do n8n, com abas: Conciliação, Pendências de Conciliação, Pendências de Categorização, Transferências entre Contas e Dashboard.
+Foi aí que decidi arregar as mangas e construir algo melhor: um **painel de conciliação bancária inspirado em ferramentas como o Conta Azul**, usando **n8n** para automação e **Notion** como banco de dados. Hoje, o que antes era feito em planilha — com risco de erro humano e retrabalho — acontece em um painel web simples, bonito e funcional.
 
-Detalhes de nodes/branches do workflow: [`docs/arquitetura-workflow.md`](docs/arquitetura-workflow.md).
+Esse repositório é o resultado desse processo: uma solução real, testada no dia a dia de uma empresa de verdade, construída do zero para resolver um problema de verdade. 🚀
 
-## Fluxo do processo
+## ✨ O que o painel faz
 
-1. Baixar manualmente o extrato OFX no site/app do banco.
-2. Importar o arquivo através do formulário do n8n.
-3. n8n faz o parsing do OFX, agrupa as movimentações e grava na base `Movimentações Bancárias`.
-4. No painel web:
-   - Categorizar movimentações pendentes.
-   - Conferir os valores com o extrato e marcar o período como conciliado (ou registrar divergência).
-   - Visualizar o dashboard (entradas, saídas, saldo, análise horizontal/vertical), excluindo transferências entre contas dos totais.
-   - Visualizar transferências entre contas separadamente.
+- 📥 **Importação de extratos (OFX)** — direto por um formulário, sem planilha.
+- 🏷️ **Categorização manual assistida** — simples, rápida, sem fórmulas quebradas.
+- ✅ **Conciliação por período** — compara o saldo calculado com o extrato e sinaliza divergências.
+- 🔁 **Transferências entre contas** — tratadas à parte, sem distorcer os totais do dashboard.
+- 📊 **Dashboard financeiro** — entradas, saídas, saldo, ranking de categorias, evolução mensal e análises vertical/horizontal de gastos.
 
-Este fluxo substitui o processo manual anterior (feito em planilha), documentado em [`docs/fluxo-original-planilha.md`](docs/fluxo-original-planilha.md).
+## 🏗️ Arquitetura
 
-## Estrutura do repositório
+- **n8n** orquestra todo o fluxo (formulário de importação → parsing do OFX → gravação no Notion → webhook do painel).
+- **Notion** guarda os dados em 4 bases: `Movimentações Bancárias`, `Conciliação Bancária`, `Contas a Pagar` e `Contas a Receber`.
+- **Painel Web** é uma página HTML/JS servida por um Webhook do n8n, com 5 abas: Conciliação, Pendências de Conciliação, Pendências de Categorização, Transferências entre Contas e Dashboard.
+
+Detalhes completos de nodes e branches: [`docs/arquitetura-workflow.md`](docs/arquitetura-workflow.md).
+
+## 🔄 Do "antes" para o "depois"
+
+| Antes (planilha) | Depois (este projeto) |
+|---|---|
+| Baixar OFX manualmente | Baixar OFX manualmente (mantido) |
+| Importar na planilha | Importar por formulário no n8n |
+| Categorizar célula por célula | Categorizar em um painel web |
+| Conferir saldo manualmente | Conciliação com badges automáticos de status |
+| Sem visão consolidada | Dashboard com gráficos e análises |
+
+O fluxo manual original está documentado (por completo) em [`docs/fluxo-original-planilha.md`](docs/fluxo-original-planilha.md) — vale a pena ver de onde saímos. 😄
+
+## 🛠️ Tecnologias utilizadas
+
+- **n8n** — automação de workflows (webhooks, formulários, integrações via API)
+- **Notion API** — banco de dados e modelagem de schemas relacionais
+- **JavaScript** — lógica de parsing de extratos, regras de conciliação e geração dinâmica de HTML
+- **Chart.js** — visualização de dados (gráficos de pizza, barras, linha)
+- **HTML/CSS** — interface do painel, responsiva e com identidade visual própria
+
+## 📂 Estrutura do repositório
 
 ```
 ├── README.md
@@ -43,21 +60,6 @@ Este fluxo substitui o processo manual anterior (feito em planilha), documentado
     └── fluxo-original-planilha.md
 ```
 
-## Configuração
+---
 
-1. Substitua os placeholders no código e nos nodes do n8n:
-   - `SEU-DOMINIO-N8N` / `SEU-FORM-ID` → domínio/IP do seu servidor n8n e ID do formulário de importação de extratos.
-   - Array `contas` em `src/montar-html-painel.js` → nomes reais das suas contas bancárias.
-   - `LOGO_BASE64` (opcional) → cole a logo da sua empresa em base64, se quiser personalizar o cabeçalho do painel.
-2. Crie as 4 bases no Notion (schemas descritos em `docs/arquitetura-workflow.md`) e gere um token de integração do Notion para o n8n.
-3. Recrie o workflow no n8n com os nodes/branches descritos em `docs/arquitetura-workflow.md`, usando o código de `src/montar-html-painel.js` no node "Montar HTML do Painel".
-4. Publique o workflow e acesse a URL do Webhook do painel.
-
-## Privacidade
-
-Este repositório é **privado** e não deve conter:
-- Valores financeiros reais.
-- Nomes de bancos ou contas reais.
-- Tokens, senhas, domínios ou IPs reais de infraestrutura.
-
-Sempre revise o conteúdo antes de commitar novas alterações.
+*Feito com carinho (e um pouco de JavaScript) para tornar a rotina financeira de alguém especial mais leve.* 💜
